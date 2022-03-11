@@ -9,6 +9,10 @@ CCameraManager::CCameraManager()
 	m_fpPrevFocus	= {};
 	m_pTraceObj		= nullptr;
 	m_fpDiff		= {};
+	m_fTime			= 1.f;
+	m_fAccTime		= 0.f;
+	m_fSpeed		= 0.f;
+
 }
 
 CCameraManager::~CCameraManager()
@@ -31,6 +35,11 @@ void CCameraManager::update()
 void CCameraManager::setFocusOn(fPoint focus)
 {
 	m_fpFocus = focus;
+	float fMoveDist = (m_fpFocus - m_fpPrevFocus).length();
+
+	m_fSpeed = fMoveDist / m_fTime;
+
+	m_fAccTime = 0.f;
 }
 
 void CCameraManager::setTraceObj(CObject* targetObj)
@@ -55,12 +64,16 @@ fPoint CCameraManager::getRenderPos(fPoint pos)
 
 void CCameraManager::calculateDiff()
 {
-	fPoint fpCenter = fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
-	m_fpDiff = m_fpCurFocus - fpCenter;
+	m_fAccTime += fDT;
 
-	fVec2 fvLookDir = m_fpFocus - m_fpPrevFocus;
+	if (m_fTime <= m_fAccTime)
+		m_fpCurFocus = m_fpFocus;
+	else
+	{
+		fPoint fpCenter = fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
+		m_fpCurFocus = m_fpPrevFocus + (m_fpFocus - m_fpPrevFocus).normalize() * m_fSpeed * fDT;
+		m_fpDiff = m_fpCurFocus - fpCenter;
 
-	m_fpCurFocus = m_fpPrevFocus + fvLookDir.normalize() * 500.f * fDT;
-
-	m_fpPrevFocus = m_fpCurFocus;
+		m_fpPrevFocus = m_fpCurFocus;
+	}
 }

@@ -14,6 +14,10 @@ private:
 
 	fPoint		m_fpDiff;
 
+	float		m_fTime;
+	float		m_fAccTime;
+	float		m_fSpeed;
+
 	void calculateDiff();
 
 public:

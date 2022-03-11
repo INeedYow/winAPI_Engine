@@ -10,6 +10,7 @@ public:
 
 	CTile();
 	virtual ~CTile();
+	virtual CTile* clone();
 
 	virtual void update();
 	virtual void render(HDC hDC);

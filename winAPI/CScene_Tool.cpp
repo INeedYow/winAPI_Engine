@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CScene_Tool.h"
 #include "resource.h"		// CreateDialog() 함수가 IDD_TILEBOX를 알기 위해 필요
+#include "CTile.h"
 
 INT_PTR CALLBACK TileWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -23,6 +24,18 @@ void CScene_Tool::update()
 void CScene_Tool::enter()
 {
 	CTexture* pTileTex = loadTex(L"Tile", L"texture\\tilemap.bmp");
+
+	// Tile 생성
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			CTile* pTile = new CTile();
+			pTile->setPos(fPoint((float)(j * CTile::SIZE_TILE), (float)(i * CTile::SIZE_TILE)));
+			pTile->setTexture(pTileTex);
+			addObject(pTile, OBJ::TILE);
+		}
+	}
 
 	setFocus(fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f));
 

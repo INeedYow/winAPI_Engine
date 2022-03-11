@@ -13,6 +13,11 @@ CTile::~CTile()
 {
 }
 
+CTile* CTile::clone()
+{
+	return new CTile(*this);
+}
+
 void CTile::update()
 {
 }
