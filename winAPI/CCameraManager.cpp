@@ -4,18 +4,17 @@
 
 CCameraManager::CCameraManager()
 {
-	m_fpFocus = {};
-	m_fpPrevFocus = {};
-	m_pTraceObj = nullptr;
-	m_fpDiff = {};
+	m_fpFocus		= {};
+	m_fpCurFocus	= {};
+	m_fpPrevFocus	= {};
+	m_pTraceObj		= nullptr;
+	m_fpDiff		= {};
 }
 
 CCameraManager::~CCameraManager()
 {
-
 }
 
-// 
 void CCameraManager::update()
 {
 	if (m_pTraceObj)				// 추적 중일 때
@@ -39,6 +38,16 @@ void CCameraManager::setTraceObj(CObject* targetObj)
 	m_pTraceObj = targetObj;
 }
 
+fPoint CCameraManager::getFocus()
+{
+	return m_fpCurFocus;
+}
+
+fPoint CCameraManager::getRealPos(fPoint renderPos)
+{
+	return renderPos + m_fpDiff;
+}
+
 fPoint CCameraManager::getRenderPos(fPoint pos)
 {
 	return pos - m_fpDiff;
@@ -47,5 +56,11 @@ fPoint CCameraManager::getRenderPos(fPoint pos)
 void CCameraManager::calculateDiff()
 {
 	fPoint fpCenter = fPoint(WINSIZEX / 2.f, WINSIZEY / 2.f);
-	m_fpDiff = m_fpFocus - fpCenter;
+	m_fpDiff = m_fpCurFocus - fpCenter;
+
+	fVec2 fvLookDir = m_fpFocus - m_fpPrevFocus;
+
+	m_fpCurFocus = m_fpPrevFocus + fvLookDir.normalize() * 500.f * fDT;
+
+	m_fpPrevFocus = m_fpCurFocus;
 }

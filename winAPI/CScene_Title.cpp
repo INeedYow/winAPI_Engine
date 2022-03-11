@@ -24,8 +24,8 @@ void CScene_Title::update()
 
 	if (KEY_ON(VK_LBUTTON))
 	{
-		//fPoint fptLookAt = CCameraManager::getInst()->getRealPos(mousePos());
-		//CCameraManager::getInst()->setFocus(fptLookAt);
+		fPoint fptLookAt = CCameraManager::getInst()->getRealPos(mousePos());
+		CCameraManager::getInst()->setFocus(fptLookAt);
 	}
 }
 

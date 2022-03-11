@@ -173,10 +173,11 @@ enum class COLL_DIR
 #define DT							CTimeManager::getInst()->getDT()
 #define fDT							CTimeManager::getInst()->getfDT()
 
-#define	KEY_HOLD(key)				CKeyManager::getInst()->getKeyHold(key)
-#define KEY_ON(key)					CKeyManager::getInst()->getKeyOn(key)
-#define KEY_OFF(key)				CKeyManager::getInst()->getKeyOff(key)
-#define KEY_NONE(key)				CKeyManager::getInst()->getKeyNone(key)
+#define	KEY_HOLD(key)				CKeyManager::getInst()->isKeyHold(key)
+#define KEY_ON(key)					CKeyManager::getInst()->isKeyOn(key)
+#define KEY_OFF(key)				CKeyManager::getInst()->isKeyOff(key)
+#define KEY_NONE(key)				CKeyManager::getInst()->isKeyNone(key)
+#define mousePos()					CKeyManager::getInst()->getMousePos()
 
 #define createObj(pObj, eGroup)		CEventManager::getInst()->eventCreateObject(pObj, eGroup)
 #define deleteObj(pObj)				CEventManager::getInst()->eventDeleteObject(pObj)
