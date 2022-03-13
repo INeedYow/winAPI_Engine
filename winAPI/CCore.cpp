@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "CCore.h"
 
+#include "SelectGDI.h"
+
 CCore::CCore()
 {
 	m_hDC = 0;
@@ -48,6 +50,8 @@ void CCore::update()
 
 void CCore::render()
 {
+	SelectGDI brush(m_hMemDC, BRUSH::DKGREY);
+
 	Rectangle(m_hMemDC, -1, -1, WINSIZEX + 1, WINSIZEY + 1);
 
 	CSceneManager::getInst()->render(m_hMemDC);
@@ -86,6 +90,7 @@ void CCore::CreateBrushPenFont()
 {	
 	// brush
 	m_arrBrush[(UINT)TYPE_BRUSH::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);	// 자주 쓰는 거 모아놓은 stock이 있음
+	m_arrBrush[(UINT)TYPE_BRUSH::DKGREY] = CreateSolidBrush(RGB(50, 50, 50));	// 자주 쓰는 거 모아놓은 stock이 있음
 	// font
 	m_arrFont[(UINT)TYPE_FONT::COMIC24] = CreateFont(24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, _T("Comic Sans MS"));
 	// pen

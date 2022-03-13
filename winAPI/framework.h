@@ -93,6 +93,7 @@ enum class GROUP_SCENE
 enum class TYPE_BRUSH
 {
 	HOLLOW,
+	DKGREY,
 
 	SIZE
 };
